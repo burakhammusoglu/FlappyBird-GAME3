@@ -10,14 +10,12 @@ public class gameController : MonoBehaviour
     Rigidbody2D physicsOne;
     Rigidbody2D physicsTwo;
     float uzunluk = 0;
-
-
     public GameObject engel;
     public int kacAdetEngel = 0;
     public GameObject[] engeller;
-
     float degisimZaman = 0;
     int sayac = 0;
+    bool oyunBıttı = true;
     void Start()
     {
         physicsOne = skyOne.GetComponent<Rigidbody2D>();
@@ -42,30 +40,34 @@ public class gameController : MonoBehaviour
     
     void Update()
     {
-        if (skyOne.transform.position.x <= -uzunluk)
+        if (oyunBıttı)
         {
-            skyOne.transform.position += new Vector3(uzunluk * 2, 0);
-        }
-        if (skyTwo.transform.position.x <= -uzunluk)
-        {
-            skyTwo.transform.position += new Vector3(uzunluk*2,0);
-        }
-
-        //------------------------------------------------//
-
-        degisimZaman += Time.deltaTime;
-        if (degisimZaman > 2f)
-        {
-            degisimZaman = 0f;
-            float yPosition = Random.Range(-2f, 0.50f);
-            engeller[sayac].transform.position = new Vector3(15f, yPosition);
-            sayac++;
-            if (sayac >= engeller.Length)
+            if (skyOne.transform.position.x <= -uzunluk)
             {
-                sayac = 0;
+                skyOne.transform.position += new Vector3(uzunluk * 2, 0);
             }
-        
+            if (skyTwo.transform.position.x <= -uzunluk)
+            {
+                skyTwo.transform.position += new Vector3(uzunluk * 2, 0);
+            }
+
+            //------------------------------------------------//
+
+            degisimZaman += Time.deltaTime;
+            if (degisimZaman > 2f)
+            {
+                degisimZaman = 0f;
+                float yPosition = Random.Range(-2f, 0.50f);
+                engeller[sayac].transform.position = new Vector3(15f, yPosition);
+                sayac++;
+                if (sayac >= engeller.Length)
+                {
+                    sayac = 0;
+                }
+
+            }
         }
+        
     }
 
     public void gameOver()
@@ -77,5 +79,6 @@ public class gameController : MonoBehaviour
             physicsTwo.velocity = Vector2.zero;
 
         }
+        oyunBıttı = false;
     }
 }

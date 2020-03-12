@@ -13,14 +13,15 @@ public class birdCode : MonoBehaviour
     Rigidbody2D physics;
     int puan = 0;
     bool gameOver = true;
-
     public Text soccerText;
     gameController gameControl;
+    AudioSource [] ses;
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         physics = GetComponent<Rigidbody2D>();
         gameControl = GameObject.FindGameObjectWithTag("gamecontroltag").GetComponent<gameController>();
+        ses=GetComponents<AudioSource>();
     }
 
     
@@ -58,13 +59,14 @@ public class birdCode : MonoBehaviour
         }
         
 
-    }
+    }sdfsdfs
     void birdController()
     {
         if (Input.GetMouseButtonDown(0) && gameOver)
         {
             physics.velocity = new Vector2(0, 0); // hiz(yerçekimi)0 yaptık
             physics.AddForce(new Vector2(0, 200));//sonra kuvvet uyguladık
+            ses[0].Play();
         }
         if (physics.velocity.y > 0)
         {
@@ -83,9 +85,12 @@ public class birdCode : MonoBehaviour
             puan++;
             soccerText.text = "puan=" + puan;
             Debug.Log(puan);
+            ses[1].Play();
         }
         if (col.gameObject.tag== "engeltag")
         {
+            ses[2].Play();
+
             gameOver = false;
             gameControl.gameOver();
         }
